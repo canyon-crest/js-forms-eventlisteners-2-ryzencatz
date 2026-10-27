@@ -29,6 +29,9 @@
 //
 //         Example: "hello" → "HELLO!"
 
+btnShout.addEventListener("click", function() {
+    outShout.innerHTML = shoutInput.value.toUpperCase() + "!";
+});
 
 // ============================================
 //  MAIN: Pizza Builder
@@ -64,6 +67,33 @@
 //        "takeout"  → 1.50
 //        "delivery" → 3.00
 
+btnCalc.addEventListener("click", function(){
+    radios = document.getElementsByName("rg");
+    for (let i=0; i<radios.length; i++) {
+        if (sizeRadios[i].checked) {
+            let size = parseFloat(sizeRadios[i].value);
+            break;
+        }
+    }
+
+    cbs = document.getElementsByName("cb");
+    let count = 0;
+    for (let i=0; i<cbs.length;i++) {
+        if (cbs[i].checked) {count++;}
+    }
+    count *= 0.5
+
+    let val = serviceSelect.value
+    if (val="dinein") {let fee=0.0;}
+    else if (val="takeout") {let fee=1.5}
+    else if (val="delivery") {let fee=3.0}
+
+    let total = size + count + fee;
+    if (myInput.value == "") {let name = "Customer"}
+    else {name = myInput.value}
+    document.getElementById("myPara").innerHTML = name + ", your total is $" + String(total.toFixed(2));
+});
+
 //   d) Calculate total: size + toppings + service fee
 
 //   e) Get the customer name from the input with ID "myInput"
@@ -83,3 +113,14 @@
 //         c) Uncheck ALL topping checkboxes (loop through them)
 //         d) Set the service dropdown value to "dinein"
 //         e) Set the output paragraph innerHTML to ""
+
+document.getElementById("clearBtn").addEventListener("click", function() {
+    name.value = ""
+    r3.checked = true
+    for (let i=0; i<cbs.length; i++) {
+        cbs[i].checked = false
+    }
+
+    document.getElementById("serviceDrop").value = "dinein"; 
+    document.getElementById("outTotal").innerHTML = "";
+});
